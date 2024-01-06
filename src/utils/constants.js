@@ -26,9 +26,9 @@ const cst = {
     },
     // Default config
     config: {
-        name                : 'Music Disc',
-        prefix              : '+',
-        playing             : '+help | music',
+        name                : 'Big PP',
+        prefix              : '.',
+        playing             : '.help',
         defaultVolume       : 50,
         maxVolume           : 100,
         autoLeave           : true,

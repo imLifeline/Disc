@@ -1,0 +1,94 @@
+{
+	"global": {
+		"552998962055872515": {
+			"money": 0,
+			"workCooldown": 1704548300810,
+			"bank": 2957,
+			"dailyCooldown": 1704155012045,
+			"inventory": [],
+			"history": [
+				{
+					"id": 1,
+					"memberID": "552998962055872515",
+					"guildID": "global",
+					"name": "urmom",
+					"price": 0,
+					"quantity": 1,
+					"totalPrice": 0,
+					"role": null,
+					"maxAmount": null,
+					"date": "1/2/2024, 6:57:01 AM",
+					"custom": {
+						"emoji": "<:HRSsip:1039206101578686595>",
+						"hidden": false,
+						"locked": false,
+						"hiddenSince": null,
+						"lockedSince": null
+					}
+				},
+				{
+					"id": 2,
+					"memberID": "552998962055872515",
+					"guildID": "global",
+					"name": "urmom",
+					"price": 0,
+					"quantity": 2,
+					"totalPrice": 0,
+					"role": null,
+					"maxAmount": null,
+					"date": "1/2/2024, 7:02:55 AM",
+					"custom": {
+						"emoji": "<:HRSsip:1039206101578686595>",
+						"hidden": false,
+						"locked": false,
+						"hiddenSince": null,
+						"lockedSince": null
+					}
+				},
+				{
+					"id": 3,
+					"memberID": "552998962055872515",
+					"guildID": "global",
+					"name": "urmom",
+					"price": 0,
+					"quantity": 1,
+					"totalPrice": 0,
+					"role": null,
+					"maxAmount": null,
+					"date": "1/2/2024, 7:03:10 AM",
+					"custom": {
+						"emoji": "<:HRSsip:1039206101578686595>",
+						"hidden": false,
+						"locked": false,
+						"hiddenSince": null,
+						"lockedSince": null
+					}
+				}
+			]
+		},
+		"1039228413367558195": {
+			"money": 20,
+			"workCooldown": 1704158974073,
+			"bank": 266
+		},
+		"shop": [
+			{
+				"id": 1,
+				"name": "urmom",
+				"price": 0,
+				"message": "Ur mom",
+				"description": "Your mother.",
+				"maxAmount": null,
+				"role": null,
+				"date": "1/2/2024, 6:33:26 AM",
+				"custom": {
+					"emoji": "<:HRSsip:1039206101578686595>",
+					"hidden": false,
+					"locked": false,
+					"hiddenSince": null,
+					"lockedSince": null
+				}
+			}
+		]
+	}
+}

@@ -131,11 +131,98 @@ module.exports = {
             .setDescription('Voice channel connected successfully.')
         return Embed_connect;
     },
+    Embed_balance: function (user, balance, bank) {
+        const Embed_balance = new Discord.EmbedBuilder()
+            .setAuthor({ name: user.username, iconURL: user.avatarURL() })
+            .setColor(color)
+            .setTitle('Balance')
+            .setDescription(`Cash: **${balance}**\nBank: **${bank}**`)
+            .setTimestamp()
+        return Embed_balance;
+    },
+    Embed_work: function (reward, msg) {
+        const Embed_work = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Work'})
+            .setColor(color)
+            .setDescription(`${msg} **${reward}** coins!`)
+            .setTimestamp()
+        return Embed_work;
+    },
+    Embed_deposit: function (amount) {
+        const Embed_deposit = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Deposit'})
+            .setColor(color)
+            .setDescription(`You deposited **${amount}** coins into your bank!`)
+            .setTimestamp()
+        return Embed_deposit;
+    },
+    Embed_withdraw: function (amount) {
+        const Embed_withdraw = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Withdraw'})
+            .setColor(color)
+            .setDescription(`You withdrew **${amount}** coins from your bank!`)
+            .setTimestamp()
+        return Embed_withdraw;
+    },
+    Embed_transfer: function (amount, to, from) {
+        transferDetails = `\`\`\`From: ${from}\nTo: ${to}\nAmount: ${amount}\`\`\`\nThe transaction was successful!
+        `
+        const Embed_transfer = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Transfer'})
+            .setColor(color)
+            .setDescription(`${transferDetails}`)
+            .setTimestamp()
+        return Embed_transfer;
+    },
+    Embed_shop_find: function (item) {
+        let content = 
+        `**${item.custom.emoji} ${item.name}** - Item Info:\n\n` +
 
+        `Name: ${item.name}` +
+        `${item.custom.locked ? ` [🔒 | Locked since ${new Date(item.custom.lockedSince)
+            .toLocaleString()}]` : ''}\n` +
+
+        `ID: **${item.id}**\n` +
+        `Emoji: ${item.custom.emoji}\n\n` +
+
+        `Price: **${item.price}** coins\n` +
+        `Description: **${item.description}**\n` +
+        `Max quantity in inventory: **${item.maxAmount}**\n\n` +
+
+        `${item.role ? `Role: **<@&${item.role}>**\n` : ''}` +
+        `Hidden: **${item.custom.hidden ? 'Yes' : 'No'}**\n` +
+        `Locked: **${item.custom.locked ? 'Yes' : 'No'}**\n\n` +
+
+        `Message on use: **${item.message}**\n` +
+        `Created at: **${item.date}**`
+        const Embed_shop = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Item Info'})
+            .setColor(color)
+            .setDescription(content)
+            .setTimestamp()
+        return Embed_shop;
+    },
+    Embed_shop: function (guildShop, message) {
+        let content = 
+        `**${message.guild.name}** - Guild Shop **[${guildShop.length} items]**:\n\n` +
+
+        `${guildShop
+            .map((item, index) =>
+                `${index + 1} - ${item.custom.locked ? ' 🔒 | ' : ' '}${item.custom.emoji} ` +
+                `**${item.name}** (ID: **${item.id}**) - **${item.price}** coins`)
+            .join('\n')}`
+        const Embed_shop = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Shop'})
+            .setColor(color)
+            .setDescription(content)
+            .setTimestamp()
+        return Embed_shop;
+    },
     Embed_disconnect: function () {
         const Embed_disconnect = new Discord.EmbedBuilder()
             .setColor(color)
             .setDescription('Finished playing.')
+            
         return Embed_disconnect;
     }
 }

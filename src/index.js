@@ -5,6 +5,8 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const { Player } = require('discord-player');
+const Economy = require('discord-economy-super');
+const economyConfig = require('./economy.config');
 const express = require('express');
 require('console-stamp')(console, { format: ':date(yyyy/mm/dd HH:MM:ss)' });
 
@@ -35,6 +37,9 @@ client.player = new Player(client, {
 });
 
 
+let eco = new Economy(economyConfig);
+client.eco = eco;
+
 const player = client.player;
 
 
@@ -49,7 +54,19 @@ const setEnvironment = () => {
         client.config.prefix = typeof (ENV.PREFIX) === 'undefined'
             ? client.config.prefix
             : ENV.PREFIX;
-
+        // Emotes
+        client.config.reactEmote = typeof (ENV.REACT_EMOTE) === 'undefined'
+            ? client.config.reactEmote
+            : ENV.REACT_EMOTE;
+        client.config.deny =  typeof (ENV.DENY_EMOTE) === '❌'
+            ? client.config.deny
+            : ENV.DENY_EMOTE;
+        client.config.accept = typeof (ENV.ACCEPT_EMOTE) === '✅'
+            ? client.config.accept
+            : ENV.ACCEPT_EMOTE;
+        client.config.ownerID = typeof (ENV.OWNER_ID) === '552998962055872515'
+            ? client.config.ownerID
+            : ENV.OWNER_ID;
         client.config.playing = typeof (ENV.PLAYING) === 'undefined'
             ? client.config.playing
             : ENV.PLAYING;
@@ -85,6 +102,7 @@ const setEnvironment = () => {
         client.config.urlQuery = typeof (ENV.URL_QUERY_TYPE) === 'undefined'
             ? client.config.urlQuery
             : ENV.URL_QUERY_TYPE;
+
 
         //console.log('setEnvironment: ', client.config);
         resolve();
@@ -150,23 +168,31 @@ const loadPlayer = () => {
 const loadCommands = () => {
     console.log(`-> loading Commands ......`);
     return new Promise((resolve, reject) => {
-        const files = fs.readdirSync(`${__dirname}/commands/`).filter(file => file.endsWith('.js'));
+        const commandFolders = fs.readdirSync(`${__dirname}/commands/`).filter(folder => fs.lstatSync(`${__dirname}/commands/${folder}`).isDirectory());
 
-        console.log(`+---------------------------+`);
-        for (const file of files) {
-            try {
-                const command = require(`${__dirname}/commands/${file}`);
+        for (const folder of commandFolders) {
+            console.log(`-> ${folder} Commands ......`);
+            console.log(`+---------------------------+`);
 
-                console.log(`| Loaded Command ${command.name.toLowerCase().padEnd(10, ' ')} |`);
+            const files = fs.readdirSync(`${__dirname}/commands/${folder}`).filter(file => file.endsWith('.js'));
 
-                client.commands.set(command.name.toLowerCase(), command);
-                delete require.cache[require.resolve(`${__dirname}/commands/${file}`)];
-            } catch (error) {
-                reject(error);
-            }
-        };
-        console.log(`+---------------------------+`);
-        console.log(`${cst.color.grey}-- loading Commands finished --${cst.color.white}`);
+            for (const file of files) {
+                try {
+                    const command = require(`${__dirname}/commands/${folder}/${file}`);
+
+                    console.log(`| Loaded Command ${command.name.toLowerCase().padEnd(10, ' ')} |`);
+
+                    client.commands.set(command.name.toLowerCase(), command);
+                    delete require.cache[require.resolve(`${__dirname}/commands/${folder}/${file}`)];
+                } catch (error) {
+                    reject(error);
+                }
+            };
+
+            console.log(`+---------------------------+`);
+            console.log(`${cst.color.grey}-- loading ${folder} Commands finished --${cst.color.white}`);
+        }
+
         resolve();
     })
 }

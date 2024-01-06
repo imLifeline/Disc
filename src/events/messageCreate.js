@@ -7,11 +7,11 @@ module.exports = (client, message) => {
     const prefix = client.config.prefix;
     if (message.content.indexOf(prefix) !== 0) return;
 
-
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     const cmd = client.commands.get(command) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
-
+    if (message.channel.id === '1026241280730214460' && cmd && cmd.inGeneral === false) return message.react(client.config.deny);
+    
     if (cmd && cmd.voiceChannel) {
         if (!message.member.voice.channel)
             return message.reply({ content: `❌ | You are not connected to an audio channel.`, allowedMentions: { repliedUser: false } });
