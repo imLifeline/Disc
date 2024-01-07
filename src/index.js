@@ -5,8 +5,6 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const { Player } = require('discord-player');
-const Economy = require('discord-economy-super');
-const economyConfig = require('./economy.config');
 const express = require('express');
 require('console-stamp')(console, { format: ':date(yyyy/mm/dd HH:MM:ss)' });
 
@@ -37,8 +35,12 @@ client.player = new Player(client, {
 });
 
 
-let eco = new Economy(economyConfig);
-client.eco = eco;
+
+MongoEconomy.connect(ENV.MONGO_URL,
+    () => console.log('MongoDB connected.'),
+    (err) => console.log(err)
+);
+client.ecoMongo = MongoEconomy;
 
 const player = client.player;
 
