@@ -35,21 +35,33 @@ npm install
 ### Configure environment
 [`.env`](./.env) 
 ```env
-TOKEN = "your_token"
-NAME = "Music Disc"
-PREFIX = "+"
-PLAYING = "+help | music"
-EMBEDS_COLOR = "#FFFFFF"
-DEFAULT_VOLUME = 50
-MAX_VOLUME = 100
-AUTO_LEAVE = true
-AUTO_LEAVE_COOLDOWN = 5000
-DISPLAY_VOICE_STATE = true
+TOKEN = ""
+BOT_NAME = ""
+OWNER_ID = ""
+PREFIX = ""
+PLAYING = ""
+
+EMBED_COLOR = ""
+
+DEFAULT_VOLUME = ""
+MAX_VOLUME = ""
+AUTO_LEAVE = ""
+AUTO_LEAVE_COOLDOWN = ""
+DISPLAY_VOICE_STATE = ""
 PORT = 33333
 
-TEXT_QUERY_TYPE = "youtubeSearch"
+TEXT_QUERY_TYPE = "spotifySearch"
 URL_QUERY_TYPE = "auto"
-DP_FORCE_YTDL_MOD = "play-dl"
+DP_FORCE_YTDL_MOD = "@distube/ytdl-core"
+
+MONGO_URL = ""
+
+REACT_EMOTE = ""
+CURRENCY_EMOTE = ""
+DENY_EMOTE = ""
+ACCEPT_EMOTE = ""
+
+WORK_COOLDOWN = 10000
 ```
 
 <details> 
