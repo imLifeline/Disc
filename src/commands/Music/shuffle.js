@@ -3,6 +3,7 @@ module.exports = {
     aliases: ['random'],
     description: 'Shuffle Playlist',
     usage: 'random',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

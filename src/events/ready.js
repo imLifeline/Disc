@@ -38,5 +38,6 @@ module.exports = async (client) => {
     }));
 
     client.user.setActivity(client.config.playing);
+    await client.db.connect();
     console.log(`>>> Logged in as ${client.user.username}`);
 };

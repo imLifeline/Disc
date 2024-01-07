@@ -3,6 +3,7 @@ module.exports = {
     aliases: ['lp'],
     description: 'Turns the music loop mode on or off',
     usage: 'loop <ap/all/one/off>',
+    category: 'Music',
     voiceChannel: true,
     options: [
         {

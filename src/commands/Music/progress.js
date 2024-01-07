@@ -3,6 +3,7 @@ module.exports = {
     aliases: ["t"],
     description: 'show the current time of the song',
     usage: 'time',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

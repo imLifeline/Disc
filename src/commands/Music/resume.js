@@ -3,6 +3,7 @@ module.exports = {
     aliases: [],
     description: 'Resume paused song',
     usage: 'resume',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

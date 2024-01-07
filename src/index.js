@@ -27,6 +27,17 @@ let client = new Client({
     disableMentions: 'everyone',
 });
 
+const { Database } = require('quickmongo');
+const db = new Database(process.env.MONGO_URL);
+
+db.on("ready", () => {
+    console.log("Connected to the database");
+});
+ 
+client.db = db;
+
+
+
 client.config = cst.config;
 client.commands = new Collection();
 client.player = new Player(client, {

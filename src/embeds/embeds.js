@@ -147,11 +147,11 @@ module.exports = {
             .setTimestamp()
         return Embed_balance;
     },
-    Embed_work: function (reward, msg) {
+    Embed_work: function (reward) {
         const Embed_work = new Discord.EmbedBuilder()
             .setAuthor({ name: 'Work'})
             .setColor(color)
-            .setDescription(`${msg} **${reward}** coins!`)
+            .setDescription(`${reward}`)
             .setTimestamp()
         return Embed_work;
     },

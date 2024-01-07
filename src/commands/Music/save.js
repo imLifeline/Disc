@@ -6,6 +6,7 @@ module.exports = {
     aliases: [],
     description: 'Save the current song',
     usage: 'save',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

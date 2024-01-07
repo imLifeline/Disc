@@ -4,6 +4,7 @@ module.exports = {
     description: 'Back to previous song',
     usage: 'back',
     voiceChannel: true,
+    category: 'Music',
     options: [],
 
     async execute(client, message) {

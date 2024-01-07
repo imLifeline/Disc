@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['np'],
     description: 'Show now playing song',
     usage: 'nowplaying',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

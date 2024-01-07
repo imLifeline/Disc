@@ -6,6 +6,7 @@ module.exports = {
     aliases: [],
     description: 'seek',
     usage: 'seek <[hhmm]ss/[hh:mm]:ss> (ex: 3m20s, 1:20:55)',
+    category: 'Music',
     voiceChannel: true,
     options: [
         {

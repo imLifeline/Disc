@@ -17,10 +17,11 @@ module.exports = {
     ],
     execute (client, message, args) {
         const prefix = client.config.prefix;
-        if(args){
-            const command = message.args.join(' ');
+        let command = '';
+        if(args[0]){
+            command = message.args.join(' ');
         } else {
-            const command = null;
+            command = null;
         }
 
         if (!command) {
@@ -33,6 +34,7 @@ module.exports = {
                 if (!categories[x.category]) {
                     categories[x.category] = [];
                 }
+                if(x.category === 'Owner' && message.author.id !== client.config.ownerID) return;
                 categories[x.category].push(x);
             });
 

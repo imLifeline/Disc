@@ -13,7 +13,7 @@ module.exports = {
     async execute(client, message) {
         const code = message.content.split(' ').slice(1).join(' ');
         if (!code) return message.reply({ content: 'No code provided', allowedMentions: { repliedUser: false } });
-        const evaled = await Eval.run(message, { bot: client, eco: client.eco, config: client.config, server: client.eco.guilds.get('global'), code: code });
+        const evaled = await Eval.run(message, { bot: client, config: client.config, code: code });
         message.channel.send({ content: '```JS\n' + evaled + '```'}); // or message.reply('```JS\n' + evaulated + '```');
     },
     slashExecute(client, interaction) {

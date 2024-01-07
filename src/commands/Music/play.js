@@ -6,6 +6,7 @@ module.exports = {
     aliases: ['p'],
     description: 'Enter your song link or song name to play',
     usage: 'play <URL/song name>',
+    category: 'Music',
     voiceChannel: true,
     options: [
         {

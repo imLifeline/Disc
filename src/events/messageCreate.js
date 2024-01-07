@@ -1,7 +1,7 @@
 const { color } = require(`${__dirname}/../utils/constants`);
 
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
     if (message.author.bot || message.channel.type === 'dm') return;
 
     const prefix = client.config.prefix;
@@ -24,6 +24,7 @@ module.exports = (client, message) => {
         console.log(`(${color.grey}${message.guild.name}${color.white}) ${message.author.username} : ${message.content}`);
         message.channel.sendTyping();
         if(cmd.category === 'Owner' && message.author.id !== client.config.ownerID) return message.reply({ content: `${client.config.deny} | You are not the bot owner.`, allowedMentions: { repliedUser: false } });
+        if(cmd.category === 'Admin' && !message.member.permissions.has('ADMINISTRATOR')) return message.reply({ content: `${client.config.deny} | You are not an administrator.`, allowedMentions: { repliedUser: false } });
         cmd.execute(client, message, args);
     }
 };

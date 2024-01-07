@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['ly'],
     description: 'Get the lyrics of the current playing song',
     usage: 'lyrics <page number>',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

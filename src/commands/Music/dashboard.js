@@ -10,6 +10,7 @@ module.exports = {
     aliases: ['d', 'main'],
     description: 'Move the dashboard embed to the bottom',
     usage: 'dashboard',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

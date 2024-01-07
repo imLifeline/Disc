@@ -6,6 +6,7 @@ module.exports = {
     aliases: ['q', 'list'],
     description: 'Show playlist',
     usage: 'queue',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 

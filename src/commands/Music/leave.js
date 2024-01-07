@@ -3,6 +3,7 @@ module.exports = {
     aliases: ['stop'],
     description: 'Leave current voice channel',
     usage: 'leave',
+    category: 'Music',
     voiceChannel: true,
     options: [],
 
