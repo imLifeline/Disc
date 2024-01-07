@@ -4,7 +4,7 @@ module.exports = {
     name: 'stone',
     aliases: [],
     description: 'Stone',
-    usage: 'stone',
+    usage: 'stone <user>',
     category: 'Actions',
     options: [],
     slashExecute(client, interaction) {
