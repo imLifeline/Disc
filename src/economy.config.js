@@ -11,7 +11,6 @@ const economyConfig = {
     weeklyAmount: 5000,
     subtractOnBuy: true,
     savePurchasesHistory: true,
-    storagePath: './EcoStorage/storage.json',
     updateCountdown: 1000,
     checkStorage: true,
     // connection: {
