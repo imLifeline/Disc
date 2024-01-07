@@ -15,9 +15,13 @@ module.exports = {
             required: false
         }
     ],
-    execute (client, message) {
+    execute (client, message, args) {
         const prefix = client.config.prefix;
-        const command = message.args.join(' ');
+        if(args){
+            const command = message.args.join(' ');
+        } else {
+            const command = null;
+        }
 
         if (!command) {
             let title = client.user.username;
