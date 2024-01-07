@@ -35,13 +35,6 @@ client.player = new Player(client, {
 });
 
 
-
-MongoEconomy.connect(ENV.MONGO_URL,
-    () => console.log('MongoDB connected.'),
-    (err) => console.log(err)
-);
-client.ecoMongo = MongoEconomy;
-
 const player = client.player;
 
 const emotes = {
