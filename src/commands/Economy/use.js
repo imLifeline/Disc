@@ -18,19 +18,19 @@ module.exports = {
         const item = inventory.find(item => item.id == parseInt(itemID) || item.name == itemID)
 
         if (!itemID) {
-            return message.channel.send(`${message.author}, please specify an item in your inventory.`)
+            return message.reply({content: `${client.config.deny} | Please specify an item.`, allowedMentions: { repliedUser: false } })
         }
 
         if (!item || item?.custom?.hidden) {
-            return message.channel.send(`${message.author}, item not found in your inventory.`)
+            return message.reply({content: `${client.config.deny} | Item not found.`, allowedMentions: { repliedUser: false } })
         }
 
         if (item.custom.locked) {
-            return message.channel.send(`${message.author}, this item is locked - you cannot use it.`)
+            return message.reply({content: `${client.config.deny} | This item is locked - you cannot use it.`, allowedMentions: { repliedUser: false } })
         }
 
         const resultMessage = item.use(client)
-        message.channel.send(resultMessage)
+        message.reply({content: `${client.config.accept} | ${resultMessage}`, allowedMentions: { repliedUser: false } })
 
 },
 

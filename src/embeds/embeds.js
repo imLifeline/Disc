@@ -131,6 +131,13 @@ module.exports = {
             .setDescription('Voice channel connected successfully.')
         return Embed_connect;
     },
+    Embed_disconnect: function () {
+        const Embed_disconnect = new Discord.EmbedBuilder()
+            .setColor(color)
+            .setDescription('Finished playing.')
+            
+        return Embed_disconnect;
+    },
     Embed_balance: function (user, balance, bank) {
         const Embed_balance = new Discord.EmbedBuilder()
             .setAuthor({ name: user.username, iconURL: user.avatarURL() })
@@ -218,11 +225,24 @@ module.exports = {
             .setTimestamp()
         return Embed_shop;
     },
-    Embed_disconnect: function () {
-        const Embed_disconnect = new Discord.EmbedBuilder()
+    Embed_inventory: function (userInventory, message) {
+        let content = 
+        `[${userInventory.length} items]:\n\n` +
+
+        `${userInventory
+            .map(
+                (data, index) =>
+                    `${index + 1} - **x${data.quantity} ${data.item.custom.emoji} ` +
+                    `${data.item.name}** (ID: **${data.item.id}**) ` +
+                    `for **${data.totalPrice}** coins`
+            )
+            .join('\n')}`
+        const Embed_inventory = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Inventory'})
             .setColor(color)
-            .setDescription('Finished playing.')
-            
-        return Embed_disconnect;
+            .setDescription(content)
+            .setTimestamp()
+        return Embed_inventory;
     }
+
 }

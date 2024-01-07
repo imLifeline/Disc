@@ -20,34 +20,33 @@ module.exports = {
         const item = shop.find(item => item.id == parseInt(itemID) || item.name == itemID)
 
         if (!itemID) {
-            return message.channel.send(`${message.author}, please specify an item.`)
+            return message.reply({content: `${client.config.deny} | Please specify an item.`, allowedMentions: { repliedUser: false } })
         }
 
         if (!item || item?.custom?.hidden) {
-            return message.channel.send(`${message.author}, item not found.`)
+            return message.reply({content: `${client.config.deny} | Item not found.`, allowedMentions: { repliedUser: false } })
         }
 
         if (item.custom.locked) {
-            return message.channel.send(`${message.author}, this item is locked - you cannot buy it.`)
+            return message.reply({content: `${client.config.deny} | This item is locked - you cannot buy it.`, allowedMentions: { repliedUser: false } })
         }
 
         if (!item.isEnoughMoneyFor(message.author.id, quantity)) {
-            return message.channel.send(
-                `${message.author}, you don't have enough coins to buy ` +
-                `**x${quantity} ${item.custom.emoji} ${item.name}**.`
-            )
+            return message.reply({content: `${client.config.deny} | You don't have enough coins to buy **x${quantity} ${item.custom.emoji} ${item.name}**.`, allowedMentions: { repliedUser: false } })
+            
         }
 
         const buyingResult = user.items.buy(item.id, quantity)
 
         if (!buyingResult.status) {
-            return message.channel.send(`${message.author}, failed to buy the item: ${buyingResult.message}`)
+            return message.reply({content: `${client.config.deny} | failed to but the item ${buyingResult.message}`, allowedMentions: { repliedUser: false } })
         }
 
-        message.channel.send(
-            `${message.author}, you bought **x${buyingResult.quantity} ` +
-            `${item.custom.emoji} ${item.name}** for **${buyingResult.totalPrice}** coins.`
-        )
+        message.reply({
+            content: `${client.config.accept} | You bought **x${buyingResult.quantity} ` +
+            `${item.custom.emoji} ${item.name}** for **${buyingResult.totalPrice}** coins.`,
+            allowedMentions: { repliedUser: false }
+        })
 
 },
 

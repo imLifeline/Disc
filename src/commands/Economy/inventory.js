@@ -17,7 +17,7 @@ module.exports = {
         const userInventory = inventory.filter(item => !item.custom.hidden)
 
         if (!userInventory.length) {
-            return message.channel.send(`${message.author}, you don't have any items in your inventory.`)
+            return message.reply({content: `${client.config.deny} | You don't have any items in your inventory!`, allowedMentions: { repliedUser: false } })
         }
 
         const cleanInventory = [...new Set(userInventory.map(item => item.name))]
@@ -31,19 +31,8 @@ module.exports = {
                     item
                 }
             })
-
-        message.channel.send(
-            `${message.author}, here's your inventory [**${userInventory.length} items**]:\n\n` +
-            cleanInventory
-                .map(
-                    (data, index) =>
-                        `${index + 1} - **x${data.quantity} ${data.item.custom.emoji} ` +
-                        `${data.item.name}** (ID: **${data.item.id}**) ` +
-                        `for **${data.totalPrice}** coins`
-                )
-                .join('\n')
-        )
-
+        
+        message.reply({ embeds: [embed.Embed_inventory(cleanInventory, message)], allowedMentions: { repliedUser: false } })
 },
 
     slashExecute(client, interaction) {
