@@ -1,6 +1,5 @@
 const embed = require('../../embeds/embeds');
 
-
 module.exports = {
     name: 'help',
     aliases: ['h'],
@@ -16,21 +15,34 @@ module.exports = {
             required: false
         }
     ],
-
-    execute(client, message, args) {
+    execute (client, message) {
         const prefix = client.config.prefix;
+        const command = message.args.join(' ');
 
-        if (!args[0]) {
+        if (!command) {
             let title = client.user.username;
             let thumbnail = client.user.displayAvatarURL();
             const commands = client.commands.filter(x => x.showHelp !== false);
 
-            let description = `**Available Commands**\n` + commands.map(x => `• \`${prefix}${x.name}${x.aliases[0] ? ` (${x.aliases.map(y => y).join(', ')})\`` : '\`'}`).join('\n');
+            let categories = {};
+            commands.forEach(x => {
+                if (!categories[x.category]) {
+                    categories[x.category] = [];
+                }
+                categories[x.category].push(x);
+            });
 
-            return message.reply({ embeds: [embed.Embed_help(title, thumbnail, description)], allowedMentions: { repliedUser: false } });
+            let description = '';
+            for (const category in categories) {
+                description += `**${category}**\n`;
+                description += categories[category].map(x => `• \`${prefix}${x.name}${x.aliases[0] ? ` (${x.aliases.map(y => y).join(', ')})\`` : '\`'}`).join('\n');
+                description += '\n\n';
+            }
+
+            return message.channel.send({ embeds: [embed.Embed_help(title, thumbnail, description)] });
         }
         else {
-            let helpCmd = args[0];
+            let helpCmd = command;
             const commands = client.commands.filter(x => x.showHelp !== false);
             //console.log('helpCmd', helpCmd);
 
@@ -40,15 +52,14 @@ module.exports = {
                     let command = x.name
                     let description = `${x.description}\n\`\`\`${prefix}${x.usage}\`\`\``;
 
-                    message.reply({ embeds: [embed.Embed_help2(command, description)], allowedMentions: { repliedUser: false } });
+                    message.channel.send({ embeds: [embed.Embed_help2(command, description)] });
                     return true;
                 }
             });
 
-            if (!Boolean(found)) return message.reply({ content: '❌ | The command not found.', allowedMentions: { repliedUser: false } });
+            if (!Boolean(found)) return message.reply({ content: `${client.config.deny} | The command not found.`, allowedMentions: { repliedUser: false } });
         }
     },
-
     slashExecute(client, interaction) {
         const prefix = client.config.prefix;
         const command = interaction.options.getString("command");
@@ -58,10 +69,22 @@ module.exports = {
             let thumbnail = client.user.displayAvatarURL();
             const commands = client.commands.filter(x => x.showHelp !== false);
 
-            let description = `**Available Commands**\n` + commands.map(x => `• \`${prefix}${x.name}${x.aliases[0] ? ` (${x.aliases.map(y => y).join(', ')})\`` : '\`'}`).join('\n');
+            let categories = {};
+            commands.forEach(x => {
+                if (!categories[x.category]) {
+                    categories[x.category] = [];
+                }
+                categories[x.category].push(x);
+            });
+
+            let description = '';
+            for (const category in categories) {
+                description += `**${category}**\n`;
+                description += categories[category].map(x => `• \`${prefix}${x.name}${x.aliases[0] ? ` (${x.aliases.map(y => y).join(', ')})\`` : '\`'}`).join('\n');
+                description += '\n\n';
+            }
 
             return interaction.reply({ embeds: [embed.Embed_help(title, thumbnail, description)], allowedMentions: { repliedUser: false } });
-
         }
         else {
             let helpCmd = command;
@@ -79,7 +102,8 @@ module.exports = {
                 }
             });
 
-            if (!Boolean(found)) return interaction.reply({ content: '❌ | The command not found.', allowedMentions: { repliedUser: false } });
+            if (!Boolean(found)) return interaction.reply({ content: `${client.config.deny} | The command not found.`, allowedMentions: { repliedUser: false } });
         }
-    },
+    }
 };
+
