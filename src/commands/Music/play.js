@@ -18,7 +18,7 @@ module.exports = {
 
     async execute(client, message, args) {
         if (!args[0])
-            return message.reply({ content: `❌ | Write the name of the music you want to search.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | Write the name of the music you want to search.`, allowedMentions: { repliedUser: false } });
 
         const str = args.join(' ');
         let queryType = '';
@@ -32,11 +32,11 @@ module.exports = {
         })
             .catch((error) => {
                 console.log(error);
-                return message.reply({ content: `❌ | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
+                return message.reply({ content: `${client.config.deny} | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
             });
 
         if (!results || !results.hasTracks())
-            return message.reply({ content: `❌ | No results found.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | No results found.`, allowedMentions: { repliedUser: false } });
 
         /*
         const queue = await client.player.play(message.member.voice.channel.id, results, {
@@ -77,7 +77,7 @@ module.exports = {
         } catch (error) {
             console.log(error);
             if (!queue?.deleted) queue?.delete();
-            return message.reply({ content: `❌ | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
         }
 
         results.playlist ? queue.addTrack(results.tracks) : queue.addTrack(results.tracks[0]);
@@ -86,7 +86,7 @@ module.exports = {
             await queue.node.play()
                 .catch((error) => {
                     console.log(error);
-                    return message.reply({ content: `❌ | I can't play this track.`, allowedMentions: { repliedUser: false } });
+                    return message.reply({ content: `${client.config.deny} | I can't play this track.`, allowedMentions: { repliedUser: false } });
                 });
         }
 
@@ -107,11 +107,11 @@ module.exports = {
         })
             .catch((error) => {
                 console.log(error);
-                return interaction.reply({ content: `❌ | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
+                return interaction.reply({ content: `${client.config.deny} | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
             });
 
         if (!results || !results.tracks.length)
-            return interaction.reply({ content: `❌ | No results found.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | No results found.`, allowedMentions: { repliedUser: false } });
 
 
         const queue = await client.player.nodes.create(interaction.guild, {
@@ -136,7 +136,7 @@ module.exports = {
         } catch (error) {
             console.log(error);
             if (!queue?.deleted) queue?.delete();
-            return interaction.reply({ content: `❌ | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
         }
 
         results.playlist ? queue.addTrack(results.tracks) : queue.addTrack(results.tracks[0]);
@@ -145,10 +145,10 @@ module.exports = {
             await queue.node.play()
                 .catch((error) => {
                     console.log(error);
-                    return interaction.reply({ content: `❌ | I can't play this track.`, allowedMentions: { repliedUser: false } });
+                    return interaction.reply({ content: `${client.config.deny} | I can't play this track.`, allowedMentions: { repliedUser: false } });
                 });
         }
 
-        return interaction.reply("✅ | Music added.");
+        return interaction.reply("${client.config.accept} | Music added.");
     },
 };

@@ -10,7 +10,7 @@ module.exports = {
         const queue = client.player.nodes.get(message.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return message.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
         if (!queue.deleted)
             queue.delete();
@@ -22,11 +22,11 @@ module.exports = {
         const queue = client.player.nodes.get(interaction.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return interaction.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
         if (!queue.deleted)
             queue.delete();
 
-        return interaction.reply('✅ | Bot leave.');
+        return interaction.reply('${client.config.accept} | Bot leave.');
     },
 };

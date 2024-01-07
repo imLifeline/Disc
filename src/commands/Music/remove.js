@@ -13,13 +13,13 @@ module.exports = {
         const queue = client.player.nodes.get(message.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return message.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
 
         const tracks = queue.tracks.map((track, index) => `${++index}. ${track.title}`);
 
         if (tracks.length < 1)
-            return message.reply({ content: `❌ | No music in queue after current.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | No music in queue after current.`, allowedMentions: { repliedUser: false } });
 
 
         let nowplaying = `Now Playing : ${queue.currentTrack.title}\n\n`;
@@ -49,7 +49,7 @@ module.exports = {
             const index = parseInt(query.content);
 
             if (!index || index <= 0 || index > tracks.length) {
-                return message.reply({ content: `✅ | Cancelled remove.`, allowedMentions: { repliedUser: false } })
+                return message.reply({ content: `${client.config.accept} | Cancelled remove.`, allowedMentions: { repliedUser: false } })
                     && collector.stop();
             }
 
@@ -62,7 +62,7 @@ module.exports = {
 
         collector.on('end', (msg, reason) => {
             if (reason === 'time')
-                return message.reply({ content: `❌ | Song remove time expired`, allowedMentions: { repliedUser: false } });
+                return message.reply({ content: `${client.config.deny} | Song remove time expired`, allowedMentions: { repliedUser: false } });
         });
     },
 
@@ -70,13 +70,13 @@ module.exports = {
         const queue = client.player.nodes.get(interaction.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return interaction.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
 
         const tracks = queue.tracks.map((track, index) => `${++index}. ${track.title}`);
 
         if (tracks.length < 1)
-            return interaction.reply({ content: `❌ | No music in queue after current.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | No music in queue after current.`, allowedMentions: { repliedUser: false } });
 
 
         let nowplaying = `Now Playing : ${queue.currentTrack.title}\n\n`;
@@ -105,7 +105,7 @@ module.exports = {
             const index = parseInt(query.content);
 
             if (!index || index <= 0 || index > tracks.length) {
-                return query.reply({ content: `✅ | Cancelled remove.`, allowedMentions: { repliedUser: false } })
+                return query.reply({ content: `${client.config.accept} | Cancelled remove.`, allowedMentions: { repliedUser: false } })
                     && collector.stop();
             }
 
@@ -118,7 +118,7 @@ module.exports = {
 
         collector.on('end', (msg, reason) => {
             if (reason === 'time')
-                return interaction.reply({ content: `❌ | Song remove time expired`, allowedMentions: { repliedUser: false } });
+                return interaction.reply({ content: `${client.config.deny} | Song remove time expired`, allowedMentions: { repliedUser: false } });
         });
     },
 };

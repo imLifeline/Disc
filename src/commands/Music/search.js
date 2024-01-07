@@ -19,7 +19,7 @@ module.exports = {
 
     async execute(client, message, args) {
         if (!args[0])
-            return message.reply({ content: `❌ | Please enter a valid song name.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | Please enter a valid song name.`, allowedMentions: { repliedUser: false } });
 
         const str = args.join(' ');
         let queryType = '';
@@ -33,11 +33,11 @@ module.exports = {
         })
             .catch((error) => {
                 console.log(error);
-                return message.reply({ content: `❌ | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
+                return message.reply({ content: `${client.config.deny} | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
             });
 
         if (!results || !results.hasTracks())
-            return message.reply({ content: `❌ | No results found.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | No results found.`, allowedMentions: { repliedUser: false } });
 
 
         const queue = await client.player.nodes.create(message.guild, {
@@ -63,7 +63,7 @@ module.exports = {
         } catch (error) {
             console.log(error);
             if (!queue?.deleted) queue?.delete();
-            return message.reply({ content: `❌ | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
         }
 
         await message.react(client.config.reactEmote);
@@ -75,11 +75,11 @@ module.exports = {
                 await queue.node.play()
                     .catch((error) => {
                         console.log(error);
-                        return message.reply({ content: `❌ | I can't play this track.`, allowedMentions: { repliedUser: false } });
+                        return message.reply({ content: `${client.config.deny} | I can't play this track.`, allowedMentions: { repliedUser: false } });
                     });
             }
 
-            return message.reply({ content: "✅ | Music added.", allowedMentions: { repliedUser: false } });
+            return message.reply({ content: "${client.config.accept} | Music added.", allowedMentions: { repliedUser: false } });
         }
         else {
             let select = new StringSelectMenuBuilder()
@@ -109,18 +109,18 @@ module.exports = {
                     await queue.node.play()
                         .catch((error) => {
                             console.log(error);
-                            return message.reply({ content: `❌ | I can't play this track.`, allowedMentions: { repliedUser: false } });
+                            return message.reply({ content: `${client.config.deny} | I can't play this track.`, allowedMentions: { repliedUser: false } });
                         });
                 }
 
                 i.deferUpdate();
-                return msg.edit({ content: "✅ | Music added.", components: [], allowedMentions: { repliedUser: false } });
+                return msg.edit({ content: "${client.config.accept} | Music added.", components: [], allowedMentions: { repliedUser: false } });
             });
 
             collector.on("end", (collected, reason) => {
                 if (reason == "time" && collected.size == 0) {
                     if (!queue?.deleted && !queue.isPlaying()) queue?.delete();
-                    return msg.edit({ content: "❌ | Time expired.", components: [], allowedMentions: { repliedUser: false } });
+                    return msg.edit({ content: "${client.config.deny} | Time expired.", components: [], allowedMentions: { repliedUser: false } });
                 }
             });
         }
@@ -141,11 +141,11 @@ module.exports = {
         })
             .catch((error) => {
                 console.log(error);
-                return interaction.reply({ content: `❌ | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
+                return interaction.reply({ content: `${client.config.deny} | The service is experiencing some problems, please try again.`, allowedMentions: { repliedUser: false } });
             });
 
         if (!results || !results.hasTracks())
-            return interaction.editReply({ content: `❌ | No search results found.`, allowedMentions: { repliedUser: false } });
+            return interaction.editReply({ content: `${client.config.deny} | No search results found.`, allowedMentions: { repliedUser: false } });
 
 
         const queue = await client.player.nodes.create(interaction.guild, {
@@ -169,7 +169,7 @@ module.exports = {
                 await queue.connect(interaction.member.voice.channel);
         } catch {
             await client.player.deleteQueue(interaction.guild.id);
-            return interaction.editReply({ content: `❌ | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
+            return interaction.editReply({ content: `${client.config.deny} | I can't join audio channel.`, allowedMentions: { repliedUser: false } });
         }
 
 
@@ -180,11 +180,11 @@ module.exports = {
                 await queue.node.play()
                     .catch((error) => {
                         console.log(error);
-                        return interaction.reply({ content: `❌ | I can't play this track.`, allowedMentions: { repliedUser: false } });
+                        return interaction.reply({ content: `${client.config.deny} | I can't play this track.`, allowedMentions: { repliedUser: false } });
                     });
             }
 
-            return interaction.editReply("✅ | Music added.");
+            return interaction.editReply("${client.config.accept} | Music added.");
         }
         else {
             let select = new StringSelectMenuBuilder()
@@ -214,18 +214,18 @@ module.exports = {
                     await queue.node.play()
                         .catch((error) => {
                             console.log(error);
-                            return interaction.reply({ content: `❌ | I can't play this track.`, allowedMentions: { repliedUser: false } });
+                            return interaction.reply({ content: `${client.config.deny} | I can't play this track.`, allowedMentions: { repliedUser: false } });
                         });
                 }
 
                 i.deferUpdate();
-                return interaction.editReply({ content: "✅ | Music added.", components: [] });
+                return interaction.editReply({ content: "${client.config.accept} | Music added.", components: [] });
             });
 
             collector.on("end", (collected, reason) => {
                 if (reason == "time" && collected.size == 0) {
                     if (!queue?.deleted && !queue.isPlaying()) queue?.delete();
-                    return interaction.editReply({ content: "❌ | Time expired.", components: [] });
+                    return interaction.editReply({ content: "${client.config.deny} | Time expired.", components: [] });
                 }
             });
         }

@@ -36,13 +36,13 @@ module.exports = {
         const prefix = client.config.prefix;
 
         if (!queue || !queue.isPlaying())
-            return message.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
         let mode = null;
         const methods = ['Off', 'Single', 'All', 'Autoplay'];
 
         if (!args[0])
-            return message.reply({ content: `❌ | ${prefix}loop <ap/all/one/off>`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | ${prefix}loop <ap/all/one/off>`, allowedMentions: { repliedUser: false } });
 
         switch (args[0].toLowerCase()) {
             case 'off':
@@ -58,7 +58,7 @@ module.exports = {
                 mode = 3;
                 break;
             default:
-                return message.reply({ content: `❌ | ${prefix}loop <ap/all/one/off>`, allowedMentions: { repliedUser: false } });
+                return message.reply({ content: `${client.config.deny} | ${prefix}loop <ap/all/one/off>`, allowedMentions: { repliedUser: false } });
         }
         queue.setRepeatMode(mode);
 
@@ -70,7 +70,7 @@ module.exports = {
         const queue = client.player.nodes.get(interaction.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return interaction.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
 
         const methods = {

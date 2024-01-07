@@ -10,19 +10,19 @@ module.exports = {
         const queue = client.player.nodes.get(message.guild.id);
 
         if (!queue)
-            return message.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
         const success = queue.node.resume();
-        return success ? message.react('▶️') : message.reply({ content: `❌ | Something went wrong.`, allowedMentions: { repliedUser: false } });
+        return success ? message.react('▶️') : message.reply({ content: `${client.config.deny} | Something went wrong.`, allowedMentions: { repliedUser: false } });
     },
 
     slashExecute(client, interaction) {
         const queue = client.player.nodes.get(interaction.guild.id);
 
         if (!queue)
-            return interaction.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
         const success = queue.node.resume();
-        return success ? interaction.reply("▶️ | Music resumed.") : interaction.reply({ content: `❌ | Something went wrong.`, allowedMentions: { repliedUser: false } });
+        return success ? interaction.reply("▶️ | Music resumed.") : interaction.reply({ content: `${client.config.deny} | Something went wrong.`, allowedMentions: { repliedUser: false } });
     },
 };

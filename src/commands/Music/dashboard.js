@@ -17,7 +17,7 @@ module.exports = {
         const queue = client.player.nodes.get(message.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return message.reply({ content: `❌ | No music currently playing.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | No music currently playing.`, allowedMentions: { repliedUser: false } });
 
 
         try {
@@ -45,7 +45,7 @@ module.exports = {
         const queue = client.player.nodes.get(interaction.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return interaction.reply({ content: `❌ | No music currently playing.`, allowedMentions: { repliedUser: false } });
+            return interaction.reply({ content: `${client.config.deny} | No music currently playing.`, allowedMentions: { repliedUser: false } });
 
 
         try {
@@ -66,6 +66,6 @@ module.exports = {
         const cur = queue.currentTrack;
         const currequestedBy = cur.requestedBy ? cur.requestedBy : client.user;
         queue.dashboard = await queue.metadata.channel.send({ embeds: [embed.Embed_dashboard('Dashboard', cur.title, cur.url, cur.thumbnail, settings(queue), currequestedBy)], components: [row] });
-        return await interaction.reply("✅ | Dashboard updated.");
+        return await interaction.reply("${client.config.accept} | Dashboard updated.");
     },
 };

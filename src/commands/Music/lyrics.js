@@ -15,7 +15,7 @@ module.exports = {
         const queue = client.player.nodes.get(message.guild.id);
 
         if (!queue || !queue.isPlaying())
-            return message.reply({ content: `❌ | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | There is no music currently playing.`, allowedMentions: { repliedUser: false } });
 
         const track = queue.currentTrack;
 
