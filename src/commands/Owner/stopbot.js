@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'stop',
-    aliases: ['st'],
+    name: 'stopbot',
+    aliases: ['stbt'],
     description: 'Stop the bot client',
     usage: 'eval',
     category: 'Owner',
@@ -10,7 +10,6 @@ module.exports = {
     async execute(client, message) {
         message.reply({ content: 'Stopping the bot...', allowedMentions: { repliedUser: false } });
         client.destroy();
-        process.exit(1);
     },
     slashExecute(client, interaction) {
         const botPing = `${Date.now() - interaction.createdTimestamp}ms`;

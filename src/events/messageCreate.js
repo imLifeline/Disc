@@ -23,6 +23,7 @@ module.exports = (client, message) => {
     if (cmd) {
         console.log(`(${color.grey}${message.guild.name}${color.white}) ${message.author.username} : ${message.content}`);
         message.channel.sendTyping();
+        if(cmd.category === 'Owner' && message.author.id !== client.config.ownerID) return message.reply({ content: `${client.config.deny} | You are not the bot owner.`, allowedMentions: { repliedUser: false } });
         cmd.execute(client, message, args);
     }
 };
