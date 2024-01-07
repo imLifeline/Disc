@@ -42,7 +42,7 @@ client.eco = eco;
 
 const player = client.player;
 
-emotes = {
+const emotes = {
     REACT_EMOTE: "<a:gaynod:1190346081133936782>",
     CURRENCY_EMOTE: "",
     DENY_EMOTE: "<a:NO:1193614076023144619>",
@@ -55,7 +55,7 @@ const setEnvironment = () => {
         client.config.name = typeof (ENV.BOT_NAME) === 'undefined'
             ? client.config.name
             : ENV.BOT_NAME;
-
+        // Prefix
         client.config.prefix = typeof (ENV.PREFIX) === 'undefined'
             ? client.config.prefix
             : ENV.PREFIX;
