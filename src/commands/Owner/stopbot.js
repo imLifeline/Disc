@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'stop',
-    aliases: ['st'],
+    name: 'stopbt',
+    aliases: ['stbt'],
     description: 'Stop the bot client',
     usage: 'eval',
     category: 'Owner',
