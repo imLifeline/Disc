@@ -14,10 +14,10 @@ module.exports = (client, message) => {
     
     if (cmd && cmd.voiceChannel) {
         if (!message.member.voice.channel)
-            return message.reply({ content: `❌ | You are not connected to an audio channel.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | You are not connected to an audio channel.`, allowedMentions: { repliedUser: false } });
 
         if (message.guild.members.me.voice.channel && message.member.voice.channelId !== message.guild.members.me.voice.channelId)
-            return message.reply({ content: `❌ | You are not on the same audio channel as me.`, allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.deny} | You are not on the same audio channel as me.`, allowedMentions: { repliedUser: false } });
     }
 
     if (cmd) {
