@@ -8,8 +8,18 @@ module.exports = {
     options: [],
 
     async execute(client, message) {
-        await message.reply({ content: 'Stopping the bot...', allowedMentions: { repliedUser: false } });
-        client.destroy();
+        try {
+            message.channel.send(`${client.config.reactEmote} | Attempting a restart...`).then(msg => {
+              //msg.react('🆗');
+              setTimeout(function(){
+                 msg.edit(`${client.config.accept} | I have restarted!`);
+              }, 10000);
+            })
+            .then(client.destroy())
+        } catch(e) {
+                message.channel.send(`ERROR: ${e.message}`)
+    
+        }
     },
     slashExecute(client, interaction) {
         const botPing = `${Date.now() - interaction.createdTimestamp}ms`;
