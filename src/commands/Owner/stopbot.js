@@ -8,7 +8,7 @@ module.exports = {
     options: [],
 
     async execute(client, message) {
-        message.reply({ content: 'Stopping the bot...', allowedMentions: { repliedUser: false } });
+        await message.reply({ content: 'Stopping the bot...', allowedMentions: { repliedUser: false } });
         client.destroy();
     },
     slashExecute(client, interaction) {
