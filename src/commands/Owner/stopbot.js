@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'stopbot',
-    aliases: ['stbt'],
+    name: 'stop',
+    aliases: ['st'],
     description: 'Stop the bot client',
     usage: 'eval',
     category: 'Owner',
@@ -8,18 +8,8 @@ module.exports = {
     options: [],
 
     async execute(client, message) {
-        try {
-            message.channel.send(`${client.config.reactEmote} | Attempting a restart...`).then(msg => {
-              //msg.react('🆗');
-              setTimeout(function(){
-                 msg.edit(`${client.config.accept} | I have restarted!`);
-              }, 10000);
-            })
-            .then(client.destroy())
-        } catch(e) {
-                message.channel.send(`ERROR: ${e.message}`)
-    
-        }
+        message.reply({ content: 'Stopping the bot...', allowedMentions: { repliedUser: false } });
+        client.destroy();
     },
     slashExecute(client, interaction) {
         const botPing = `${Date.now() - interaction.createdTimestamp}ms`;
