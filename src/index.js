@@ -42,7 +42,12 @@ client.eco = eco;
 
 const player = client.player;
 
-
+emotes = {
+    REACT_EMOTE: "<a:gaynod:1190346081133936782>",
+    CURRENCY_EMOTE: "",
+    DENY_EMOTE: "<a:NO:1193614076023144619>",
+    ACCEPT_EMOTE: "<a:Yes:1193614234400084068>"
+}
 
 
 const setEnvironment = () => {
@@ -55,15 +60,16 @@ const setEnvironment = () => {
             ? client.config.prefix
             : ENV.PREFIX;
         // Emotes
-        client.config.reactEmote = typeof (ENV.REACT_EMOTE) === 'undefined'
+        client.config.reactEmote = typeof (emotes.REACT_EMOTE) === 'undefined'
             ? client.config.reactEmote
-            : ENV.REACT_EMOTE;
-        client.config.deny =  typeof (ENV.DENY_EMOTE) === '❌'
+            : emotes.REACT_EMOTE;
+        client.config.deny =  typeof (emotes.DENY_EMOTE) === '❌'
             ? client.config.deny
-            : ENV.DENY_EMOTE;
-        client.config.accept = typeof (ENV.ACCEPT_EMOTE) === '✅'
+            : emotes.DENY_EMOTE;
+        client.config.accept = typeof (emotes.ACCEPT_EMOTE) === '✅'
             ? client.config.accept
-            : ENV.ACCEPT_EMOTE;
+            : emotes.ACCEPT_EMOTE;
+        // Rest of the stuff
         client.config.ownerID = typeof (ENV.OWNER_ID) === '552998962055872515'
             ? client.config.ownerID
             : ENV.OWNER_ID;
