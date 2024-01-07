@@ -79,7 +79,7 @@ module.exports = {
                     });
             }
 
-            return message.reply({ content: "${client.config.accept} | Music added.", allowedMentions: { repliedUser: false } });
+            return message.reply({ content: `${client.config.accept} | Music added.`, allowedMentions: { repliedUser: false } });
         }
         else {
             let select = new StringSelectMenuBuilder()
@@ -114,7 +114,7 @@ module.exports = {
                 }
 
                 i.deferUpdate();
-                return msg.edit({ content: "${client.config.accept} | Music added.", components: [], allowedMentions: { repliedUser: false } });
+                return msg.edit({ content: `${client.config.accept} | Music added.`, components: [], allowedMentions: { repliedUser: false } });
             });
 
             collector.on("end", (collected, reason) => {
@@ -184,7 +184,7 @@ module.exports = {
                     });
             }
 
-            return interaction.editReply("${client.config.accept} | Music added.");
+            return interaction.editReply(`${client.config.accept} | Music added.`);
         }
         else {
             let select = new StringSelectMenuBuilder()
@@ -219,7 +219,7 @@ module.exports = {
                 }
 
                 i.deferUpdate();
-                return interaction.editReply({ content: "${client.config.accept} | Music added.", components: [] });
+                return interaction.editReply({ content: `${client.config.accept} | Music added.`, components: [] });
             });
 
             collector.on("end", (collected, reason) => {

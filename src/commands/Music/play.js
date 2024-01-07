@@ -149,6 +149,6 @@ module.exports = {
                 });
         }
 
-        return interaction.reply("${client.config.accept} | Music added.");
+        return interaction.reply(`${client.config.accept} | Music added.`);
     },
 };
