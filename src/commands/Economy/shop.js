@@ -20,29 +20,13 @@ module.exports = {
             name: 'buy',
             description: 'Buy an item from the shop',
             type: 'SUB_COMMAND',
-            options: [
-                {
-                    name: 'item',
-                    description: 'The item you want to buy',
-                    type: 3,
-                    required: true,
-                    choices: itemChoices
-                }
-            ]
+            options: []
         },
         {
             name: 'sell',
             description: 'Sell an item from the shop',
             type: 'SUB_COMMAND',
-            options: [
-                {
-                    name: 'item',
-                    description: 'The item you want to sell',
-                    type: 3,
-                    required: true,
-                    choices: itemChoices
-                }
-            ]
+            options: []
         }
     ],
 
@@ -54,11 +38,11 @@ module.exports = {
             await db.set(`user_${message.author.id}`, { balance: 0, bank: 0 });
         }
         if(!options) {
-            message.reply({ embeds: [embed.Embed_shop(items.items)], allowedMentions: { repliedUser: false } });
+            message.reply({ embeds: [embed.Embed_shop()], allowedMentions: { repliedUser: false } });
         } else if(options.toLowerCase() === 'buy') {
             message.reply({ embeds: [embed.Embed_shop()], allowedMentions: { repliedUser: false } });
         } else if(options.toLowerCase() === 'sell') {
-            message.reply({ embeds: [embed.Embed_shop()], allowedMentions: { repliedUser: false } });
+            message.reply({ embeds: [embed.Embed_shop_sell()], allowedMentions: { repliedUser: false } });
         } else {
             message.reply({ embeds: [embed.Embed_shop()], allowedMentions: { repliedUser: false } });
         }
