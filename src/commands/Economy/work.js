@@ -11,6 +11,13 @@ module.exports = {
     async execute(client, message) {
         let db = client.db;
         const user = await db.get(`user_${message.author.id}`);
+        let cooldown = await db.get(`user_${message.author.id}.cooldown.work`);
+        if(cooldown !== null && economyConfig.workCooldown - (Date.now() - cooldown) > 0) {
+            let timeObj = ms(economyConfig.workCooldown - (Date.now() - cooldown));
+            let time = `${timeObj.minutes}m ${timeObj.seconds}s`;
+            return message.reply({ content: `${client.config.deny} | You can work again in **${time}**`, allowedMentions: { repliedUser: false } });
+        }
+        await db.set(`user_${message.author.id}.cooldown.work`, Date.now());
         if(!user) {
             await db.set(`user_${message.author.id}`, { balance: 0, bank: 0 });
         }
