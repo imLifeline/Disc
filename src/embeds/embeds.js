@@ -209,14 +209,17 @@ module.exports = {
             .setTimestamp()
         return Embed_shop;
     },
-    Embed_shop: function (guildShop, message) {
+    Embed_shop: function (itemList) {
         let content = 
-        `**${message.guild.name}** - Guild Shop **[${guildShop.length} items]**:\n\n` +
+        `[${itemList.length} items]:\n\n` +
 
-        `${guildShop
-            .map((item, index) =>
-                `${index + 1} - ${item.custom.locked ? ' 🔒 | ' : ' '}${item.custom.emoji} ` +
-                `**${item.name}** (ID: **${item.id}**) - **${item.price}** coins`)
+        `${itemList
+            .map(
+                (data, index) =>
+                    `${index + 1}` +
+                    `${data.item.name}**) ` +
+                    `for **${data.item.value}** coins`
+            )
             .join('\n')}`
         const Embed_shop = new Discord.EmbedBuilder()
             .setAuthor({ name: 'Shop'})
