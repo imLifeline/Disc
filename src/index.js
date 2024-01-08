@@ -52,7 +52,8 @@ const emotes = {
     REACT_EMOTE: "<a:gaynod:1190346081133936782>",
     CURRENCY_EMOTE: "",
     DENY_EMOTE: "<a:NO:1193614076023144619>",
-    ACCEPT_EMOTE: "<a:Yes:1193614234400084068>"
+    ACCEPT_EMOTE: "<a:Yes:1193614234400084068>",
+    WHAT_EMOTE: "<:whatwhat:1039206140296302592>"
 }
 
 
@@ -75,6 +76,9 @@ const setEnvironment = () => {
         client.config.accept = typeof (emotes.ACCEPT_EMOTE) === '✅'
             ? client.config.accept
             : emotes.ACCEPT_EMOTE;
+        client.config.what = typeof (emotes.WHAT_EMOTE) === 'undefined'
+            ? client.config.what
+            : emotes.WHAT_EMOTE;
         // Rest of the stuff
         client.config.ownerID = typeof (ENV.OWNER_ID) === '552998962055872515'
             ? client.config.ownerID

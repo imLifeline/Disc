@@ -210,42 +210,28 @@ module.exports = {
         return Embed_shop;
     },
     Embed_shop: function (itemList) {
-        let content = 
-        `[${itemList.length} items]:\n\n` +
-
-        `${itemList
-            .map(
-                (data, index) =>
-                    `${index + 1}` +
-                    `${data.item.name}**) ` +
-                    `for **${data.item.value}** coins`
-            )
-            .join('\n')}`
         const Embed_shop = new Discord.EmbedBuilder()
             .setAuthor({ name: 'Shop'})
             .setColor(color)
-            .setDescription(content)
+            .setDescription(itemList)
             .setTimestamp()
         return Embed_shop;
     },
-    Embed_inventory: function (userInventory, message) {
-        let content = 
-        `[${userInventory.length} items]:\n\n` +
-
-        `${userInventory
-            .map(
-                (data, index) =>
-                    `${index + 1} - **x${data.quantity} ${data.item.custom.emoji} ` +
-                    `${data.item.name}** (ID: **${data.item.id}**) ` +
-                    `for **${data.totalPrice}** coins`
-            )
-            .join('\n')}`
-        const Embed_inventory = new Discord.EmbedBuilder()
-            .setAuthor({ name: 'Inventory'})
+    Embed_shop_buy: function (item, amount) {
+        const Embed_shop_buy = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Buy'})
             .setColor(color)
-            .setDescription(content)
+            .setDescription(`You bought **${amount}** ${item.emoji} ${item.name} for **${item.price * amount}** coins!`)
             .setTimestamp()
-        return Embed_inventory;
+        return Embed_shop_buy;
+    },
+    Embed_shop_sell: function (item, amount) {
+        const Embed_shop_sell = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Sell'})
+            .setColor(color)
+            .setDescription(`You sold **${amount}** ${item.emoji} ${item.name} for **${amount}** coins!`)
+            .setTimestamp()
+        return Embed_shop_sell;
     }
 
 }
