@@ -19,14 +19,14 @@ module.exports = {
         {
             name: 'buy',
             description: 'Buy an item from the shop',
-            type: 'SUB_COMMAND',
-            options: []
+            type: 1,
+            options: itemChoices
         },
         {
             name: 'sell',
             description: 'Sell an item from the shop',
-            type: 'SUB_COMMAND',
-            options: []
+            type: 1,
+            options: itemChoices
         }
     ],
 
