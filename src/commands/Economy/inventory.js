@@ -1,5 +1,7 @@
 const embed = require('../../embeds/embeds.js');
+const textMessage = require('../../embeds/textMessage.js');
 const itemData = require('../../utils/items.js');
+
 module.exports = {
     name: 'inventory',
     aliases: ['inv'],
@@ -37,6 +39,22 @@ module.exports = {
                             value: 'amount'
                         }
                     ]
+                },
+                {
+                    name: 'order',
+                    description: 'Order of sort',
+                    type: 3,
+                    required: true,
+                    choices: [
+                        {
+                            name: 'Ascending',
+                            value: 'asc'
+                        },
+                        {
+                            name: 'Descending',
+                            value: 'desc'
+                        }
+                    ]
                 }
             ]
         }
@@ -71,12 +89,12 @@ module.exports = {
             }
             for(let i = 0; i < inv.length; i++) {
                 let item = inv[i];
-                if(item.quantity === 0) continue;
+                if(item.item.quantity === 0) continue;
                 let itemData = {
                     value: item.item.value,
                     name: item.item.name,
                     emoji: item.item.emoji,
-                    amount: item.quantity,
+                    amount: item.item.quantity,
                     price: item.item.price,
                     description: item.item.description,
                     sellPrice: item.item.sellPrice,
@@ -108,7 +126,20 @@ module.exports = {
             });
            
             //message.reply({ content: `${JSON.stringify(itemlist)}`, allowedMentions: { repliedUser: false } }); //Debug
-            message.reply({ embeds: [embed.Embed_inventory(invDesc)], allowedMentions: { repliedUser: false } });
+            
+            let settings = await db.get(`user_${message.author.id}.settings`);
+            if(!settings) {
+                settings = {
+                    messageType: 'embed',
+                    color: client.config.embedColor,
+                }
+            }
+            if(settings.messageType === 'embed') {
+                message.reply({ embeds: [embed.Embed_inventory(invDesc)], allowedMentions: { repliedUser: false } });
+            } else if (settings.messageType === 'text') {
+                return message.reply({ content: textMessage.Text_inventory(message.author, invDesc), allowedMentions: { repliedUser: false } });
+            }
+
         } else if (options === 'sort'){
             let type = args[1];
             let order = args[2];
@@ -127,12 +158,12 @@ module.exports = {
             }
             for(let i = 0; i < inv.length; i++) {
                 let item = inv[i];
-                if(item.quantity === 0) continue;
+                if(item.item.quantity === 0) continue;
                 let itemData = {
                     value: item.item.value,
                     name: item.item.name,
                     emoji: item.item.emoji,
-                    amount: item.quantity,
+                    amount: item.item.quantity,
                     price: item.item.price,
                     description: item.item.description,
                     sellPrice: item.item.sellPrice,
@@ -186,8 +217,7 @@ module.exports = {
             let inv = [];
             await itemData.items.forEach(item => {
                 let itemData = {
-                    item: item,
-                    quantity: 0
+                    item: item
                 }
                 inv.push(itemData);
             });

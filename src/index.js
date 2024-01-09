@@ -53,6 +53,7 @@ const emotes = {
     CURRENCY_EMOTE: "",
     DENY_EMOTE: "<a:NO:1193614076023144619>",
     ACCEPT_EMOTE: "<a:Yes:1193614234400084068>",
+    APPROVE_EMOTE: "<a:Yes:1193614234400084068>",
     WHAT_EMOTE: "<:whatwhat:1039206140296302592>"
 }
 
@@ -73,6 +74,9 @@ const setEnvironment = () => {
         client.config.deny =  typeof (emotes.DENY_EMOTE) === '❌'
             ? client.config.deny
             : emotes.DENY_EMOTE;
+        client.config.approve = typeof (emotes.ACCEPT_EMOTE) === '✅'
+            ? client.config.approve
+            : emotes.APPROVE_EMOTE;
         client.config.accept = typeof (emotes.ACCEPT_EMOTE) === '✅'
             ? client.config.accept
             : emotes.ACCEPT_EMOTE;
@@ -119,7 +123,10 @@ const setEnvironment = () => {
             ? client.config.urlQuery
             : ENV.URL_QUERY_TYPE;
 
-
+        // Colors
+        client.config.embeColor = typeof (ENV.EMBED_COLOR) === 'undefined'
+            ? client.config.embedColor
+            : ENV.EMBED_COLOR;
         //console.log('setEnvironment: ', client.config);
         resolve();
     });

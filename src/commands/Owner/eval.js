@@ -13,7 +13,18 @@ module.exports = {
     async execute(client, message) {
         const code = message.content.split(' ').slice(1).join(' ');
         if (!code) return message.reply({ content: 'No code provided', allowedMentions: { repliedUser: false } });
-        const evaled = await Eval.run(message, { bot: client, config: client.config, inv: await client.db.get(`user_${message.author.id}.inventory`), code: code });
+        let db = client.db;
+        const userData = await db.get(`user_${message.author.id}`);
+        const invData = await db.get(`user_${message.author.id}.inventory`);
+        const shopData = await db.get(`shop`);
+
+        let user = {
+            balance: userData.balance,
+            bank: userData.bank,
+            settings: userData.settings,
+            inventory: invData,
+        }
+        const evaled = await Eval.run(message, { bot: client, config: client.config, user: user, code: code });
         message.channel.send({ content: '```JS\n' + evaled + '```'}); // or message.reply('```JS\n' + evaulated + '```');
     },
     slashExecute(client, interaction) {

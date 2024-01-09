@@ -8,6 +8,7 @@ items = [
         useAble: true,
         maxAmount: 10,
         emoji: '🍎',
+        quantity: 0,
         description: 'An apple',
     },
     {
@@ -19,6 +20,7 @@ items = [
         useAble: true,
         maxAmount: 10,
         emoji: '🍌',
+        quantity: 0,
         description: 'A banana',
     },
     {
@@ -30,6 +32,7 @@ items = [
         useAble: true,
         maxAmount: 10,
         emoji: '🍇',
+        quantity: 0,
         description: 'A grape',
     }
 ];

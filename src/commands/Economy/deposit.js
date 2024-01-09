@@ -1,4 +1,5 @@
 const embed = require('../../embeds/embeds.js');
+const textMessage = require('../../embeds/textMessage.js');
 
 module.exports = {
     name: 'deposit',
@@ -29,7 +30,18 @@ module.exports = {
         if(amount > user.balance) return message.reply({ content: `${client.config.deny} | You don't have that much money!`, allowedMentions: { repliedUser: false } });
         await db.subtract(`user_${message.author.id}.balance`, amount);
         await db.add(`user_${message.author.id}.bank`, amount);
-        message.reply({ embeds: [embed.Embed_deposit(amount)], allowedMentions: { repliedUser: false } });
+        let settings = await db.get(`user_${message.author.id}.settings`);
+        if(!settings) {
+            settings = {
+                messageType: 'embed',
+                color: client.config.embedColor,
+            }
+        }
+        if(settings.messageType === 'text') {
+            return message.reply({ content: textMessage.Text_deposit(amount), allowedMentions: { repliedUser: false } });
+        } else if(settings.messageType === 'embed') {
+            return message.reply({ embeds: [embed.Embed_deposit(amount)], allowedMentions: { repliedUser: false } });
+        }
     },
     async slashExecute(client, interaction) {
         let db = client.db;
