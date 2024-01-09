@@ -1,8 +1,9 @@
 items = [
     {
-        name: 'Item 1',
-        value: 'item1',
+        name: 'Apple',
+        value: 'a',
         price: 100,
+        sellPrice: 75,
         sellAble: true,
         useAble: true,
         maxAmount: 10,
@@ -10,9 +11,10 @@ items = [
         description: 'An apple',
     },
     {
-        name: 'Item 2',
-        value: 'item2',
+        name: 'Banana',
+        value: 'b',
         price: 200,
+        sellPrice: 175,
         sellAble: true,
         useAble: true,
         maxAmount: 10,
@@ -20,25 +22,17 @@ items = [
         description: 'A banana',
     },
     {
-        name: 'Item 3',
-        value: 'item3',
+        name: 'Grapes',
+        value: 'g',
         price: 300,
+        sellPrice: 275,
         sellAble: true,
         useAble: true,
         maxAmount: 10,
         emoji: '🍇',
         description: 'A grape',
-    },
-    {
-        name: 'Item 4',
-        value: 'item4',
-        price: 400,
-        sellAble: true,
-        useAble: true,
-        maxAmount: 10,
-        emoji: '🍈',
-        description: 'A melon',
     }
 ];
+
 
 module.exports = { items };

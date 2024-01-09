@@ -232,6 +232,13 @@ module.exports = {
             .setDescription(`You sold **${amount}** ${item.emoji} ${item.name} for **${amount}** coins!`)
             .setTimestamp()
         return Embed_shop_sell;
-    }
-
+    },
+    Embed_inventory: function (inventory) {
+        const Embed_inventory = new Discord.EmbedBuilder()
+            .setAuthor({ name: 'Inventory'})
+            .setColor(color)
+            .setDescription(inventory)
+            .setTimestamp()
+        return Embed_inventory;
+    },
 }
