@@ -69,7 +69,7 @@ module.exports = {
             await db.set(`user_${message.author.id}.inventory`, []);
             inv = await db.get(`user_${message.author.id}.inventory`);
         }
-        let sort = await db.get(`user_${message.author.id}.inventorySort`);
+        let sort = await db.get(`user_${message.author.id}.inventory.sort`);
         if (!sort) {
             await db.set(`user_${message.author.id}.inventory.sort`, 'nameasc');
             sort = await db.get(`user_${message.author.id}.inventory.sort`);
@@ -89,15 +89,15 @@ module.exports = {
             }
             for(let i = 0; i < inv.length; i++) {
                 let item = inv[i];
-                if(item.item.quantity === 0) continue;
+                if(item.quantity === 0) continue;
                 let itemData = {
-                    value: item.item.value,
-                    name: item.item.name,
-                    emoji: item.item.emoji,
-                    amount: item.item.quantity,
-                    price: item.item.price,
-                    description: item.item.description,
-                    sellPrice: item.item.sellPrice,
+                    value: item.value,
+                    name: item.name,
+                    emoji: item.emoji,
+                    amount: item.quantity,
+                    price: item.price,
+                    description: item.description,
+                    sellPrice: item.sellPrice,
                 }
                 itemlist.push(itemData);
             }
@@ -152,36 +152,16 @@ module.exports = {
                 order = 'asc';
             }
             type = type.toLowerCase();
-            let itemlist = [];
-            if(inv.length === 0) {
-                return message.reply({ content: `${client.config.deny} | You don't have any items!`, allowedMentions: { repliedUser: false } });
-            }
-            for(let i = 0; i < inv.length; i++) {
-                let item = inv[i];
-                if(item.item.quantity === 0) continue;
-                let itemData = {
-                    value: item.item.value,
-                    name: item.item.name,
-                    emoji: item.item.emoji,
-                    amount: item.item.quantity,
-                    price: item.item.price,
-                    description: item.item.description,
-                    sellPrice: item.item.sellPrice,
-                }
-                itemlist.push(itemData);
-            }
-            if(itemlist.length === 0) {
-                return message.reply({ content: `${client.config.deny} | You don't have any items!`, allowedMentions: { repliedUser: false } });
-            }
+            
             if(type === 'name') {
                 if(order === 'asc') {
                     // Ascending
-                    await db.set(`user_${message.author.id}.inventorySort`, `nameasc`);
+                    await db.set(`user_${message.author.id}.inventory.sort`, `nameasc`);
                     return message.reply({ content: `${client.config.accept} | Set your inventory sort to be Name - Ascending`, allowedMentions: { repliedUser: false } });
 
                 } else if (order === 'desc') {
                     // Descending
-                    await db.set(`user_${message.author.id}.inventorySort`, `namedesc`);
+                    await db.set(`user_${message.author.id}.inventory.sort`, `namedesc`);
                     return message.reply({ content: `${client.config.accept} | Set your inventory sort to be Name - Descending`, allowedMentions: { repliedUser: false } });
                 } else {
                     return message.reply({ content: `${client.config.deny} | Please specify a valid order!\nAvailable orders: \`${availableOrders.join(', ')}\``, allowedMentions: { repliedUser: false } });
@@ -189,11 +169,11 @@ module.exports = {
             } else if (type === 'price') {
                 if(order === 'asc') {
                     // Ascending
-                    await db.set(`user_${message.author.id}.inventorySort`, `priceasc`);
+                    await db.set(`user_${message.author.id}.inventory.sort`, `priceasc`);
                     return message.reply({ content: `${client.config.accept} | Set your inventory sort to be Price - Ascending`, allowedMentions: { repliedUser: false } });
                 } else if (order === 'desc') {
                     // Descending
-                   await db.set(`user_${message.author.id}.inventorySort`, `pricedesc`);
+                   await db.set(`user_${message.author.id}.inventory.sort`, `pricedesc`);
                     return message.reply({ content: `${client.config.accept} | Set your inventory sort to be Price - Descending`, allowedMentions: { repliedUser: false } });
                 } else {
                     return message.reply({ content: `${client.config.deny} | Please specify a valid order!\nAvailable orders: \`${availableOrders.join(', ')}\``, allowedMentions: { repliedUser: false } });
@@ -201,11 +181,11 @@ module.exports = {
             } else if (type === 'amount') {
                 if(order === 'asc') {
                     // Ascending
-                    await db.set(`user_${message.author.id}.inventorySort`, `amountasc`);
+                    await db.set(`user_${message.author.id}.inventory.sort`, `amountasc`);
                     return message.reply({ content: `${client.config.accept} | Set your inventory sort to be Amount - Ascending`, allowedMentions: { repliedUser: false } });
                 } else if (order === 'desc') {
                     // Descending
-                    await db.set(`user_${message.author.id}.inventorySort`, `amountdesc`);
+                    await db.set(`user_${message.author.id}.inventory.sort`, `amountdesc`);
                     return message.reply({ content: `${client.config.accept} | Set your inventory sort to be Amount - Descending`, allowedMentions: { repliedUser: false } });
                 } else {
                     return message.reply({ content: `${client.config.deny} | Please specify a valid order!\nAvailable orders: \`${availableOrders.join(', ')}\``, allowedMentions: { repliedUser: false } });
@@ -214,13 +194,7 @@ module.exports = {
                 return message.reply({ content: `${client.config.deny} | Please specify a valid type!\nAvailable types: \`${availableTypes.join(', ')}\``, allowedMentions: { repliedUser: false } });
             }
         } else if (options === 'set') {
-            let inv = [];
-            await itemData.items.forEach(item => {
-                let itemData = {
-                    item: item
-                }
-                inv.push(itemData);
-            });
+            let inv = {};
             inv.sort = 'nameasc';
             await client.db.set(`user_${message.author.id}.inventory`, inv);
             message.reply({ content: `Set inventory to default!`, allowedMentions: { repliedUser: false } });

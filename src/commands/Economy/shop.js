@@ -111,7 +111,12 @@ module.exports = {
             if(amount <= 0) return message.reply({ content: `${client.config.deny} | You can't buy negative items!`, allowedMentions: { repliedUser: false } });
 
             let itemData = shop.find(obj => obj.value.toLowerCase() === item)
+            if(!itemData) {
+                itemData = shop.find(obj => obj.alias.includes(item));
+            }
             if(!itemData) return message.reply({ content: `${client.config.deny} | That item doesn't exist!`, allowedMentions: { repliedUser: false } });
+
+            if(itemData.maxAmount < amount) return message.reply({ content: `${client.config.deny} | You can't buy more than ${itemData.maxAmount} of that item!`, allowedMentions: { repliedUser: false } });
             let userBalance = await db.get(`${dbUser}.balance`);
             if(userBalance < itemData.price * amount) {
                 let userBank = await db.get(`${dbUser}.bank`);
@@ -127,12 +132,13 @@ module.exports = {
                                     userInventory = [];
                                     await db.set(`${dbUser}.inventory`, userInventory);
                                 }
-                                let userItem = userInventory.find(obj => obj.item.value === itemData.value);
+                                let userItem = userInventory.find(obj => obj.value === itemData.value);
                                 if(userItem) {
-                                    userItem.item.quantity += amount;
+                                    userItem.quantity += amount;
                                     await db.set(`${dbUser}.inventory`, userInventory);
                                 } else {
-                                    userInventory.push({ item: itemData, quantity: amount });
+                                    itemData.quantity = amount;
+                                    userInventory.push(itemData);
                                     await db.set(`${dbUser}.inventory`, userInventory);
                                 }
                                 return message.reply({ embeds: [embed.Embed_shop_buy(itemData, amount)], allowedMentions: { repliedUser: false } });
@@ -150,12 +156,13 @@ module.exports = {
                     userInventory = [];
                     await db.set(`${dbUser}.inventory`, userInventory);
                 }
-                let userItem = userInventory.find(obj => obj.item.value === itemData.value);
+                let userItem = userInventory.find(obj => obj.value === itemData.value);
                 if(userItem) {
-                    userItem.item.quantity += amount;
+                    userItem.quantity += amount;
                     await db.set(`${dbUser}.inventory`, userInventory);
                 } else {
-                    userInventory.push({ item: itemData, quantity: amount });
+                    itemData.quantity = amount;
+                    userInventory.push(itemData);
                     await db.set(`${dbUser}.inventory`, userInventory);
                 }
                 await db.set(`${dbUser}.balance`, userBalance - itemData.price * amount);
@@ -176,23 +183,23 @@ module.exports = {
             if(amount < 0) return message.reply({ content: `${client.config.deny} | You can't sell negative items!`, allowedMentions: { repliedUser: false } });
             let inv = await db.get(`${dbUser}.inventory`);
             if(!inv) return message.reply({ content: `${client.config.deny} | You don't have any items!`, allowedMentions: { repliedUser: false } });
-            let invItems = inv.map(obj => obj.item.value.toLowerCase());
+            let invItems = inv.map(obj => obj.value.toLowerCase());
             if(!invItems.includes(item)) return message.reply({ content: `${client.config.deny} | You don't have that item!`, allowedMentions: { repliedUser: false } });
-            let itemData = inv.find(obj => obj.item.value.toLowerCase() === item);
-            if(itemData.item.quantity < amount) return message.reply({ content: `${client.config.deny} | You don't have enough items!`, allowedMentions: { repliedUser: false } });
-            let sellAble = itemData.item.sellAble;
+            let itemData = inv.find(obj => obj.value.toLowerCase() === item);
+            if(itemData.quantity < amount) return message.reply({ content: `${client.config.deny} | You don't have enough items!`, allowedMentions: { repliedUser: false } });
+            let sellAble = itemData.sellAble;
             if(!sellAble) return message.reply({ content: `${client.config.deny} | You can't sell that item!`, allowedMentions: { repliedUser: false } });
-            let sellPrice = itemData.item.sellPrice;
+            let sellPrice = itemData.sellPrice;
             if (!sellPrice) return message.reply({ content: `${client.config.deny} | This item doesnt have a sell pirce for some reason!`, allowedMentions: { repliedUser: false } });
 
             await db.add(`${dbUser}.balance`, sellPrice * amount);
-            itemData.item.quantity -= amount;
+            itemData.quantity -= amount;
 
             await db.set(`${dbUser}.inventory`, inv);
             
             message.reply({ embeds: [embed.Embed_shop_sell(itemData.item, amount, sellPrice * amount)], allowedMentions: { repliedUser: false } });
             // return message.reply({ content: `${JSON.stringify(inv)}`, allowedMentions: { repliedUser: false} }); //Debug for inv after lowering item quantity
-            // return message.reply({ content: `${JSON.stringify(itemData.item.quantity)}`, allowedMentions: { repliedUser: false } }); //Debug for itemData
+            // return message.reply({ content: `${JSON.stringify(itemData.quantity)}`, allowedMentions: { repliedUser: false } }); //Debug for itemData
             
         } else if(options === 'info') {
             return message.reply({ content: `${client.config.deny} | This feature is not available yet!`, allowedMentions: { repliedUser: false } });

@@ -1,6 +1,6 @@
 const _eval = require("@moscowcity/djs-eval");
 const Eval = new _eval.Eval(["552998962055872515"], "ru");
-
+const { getUser, getInventory, getSettings, getPickaxe, getOres, getOre, getCraftItems, getCraftItem, getCraftItemAmount, getCraftItemName, getCraftItemValue, checkInventory, checkIfCraftAble } = require('../../utils/rpgFunctions/user');
 module.exports = {
     name: 'eval',
     aliases: ['ev'],
@@ -17,14 +17,7 @@ module.exports = {
         const userData = await db.get(`user_${message.author.id}`);
         const invData = await db.get(`user_${message.author.id}.inventory`);
         const shopData = await db.get(`shop`);
-
-        let user = {
-            balance: userData.balance,
-            bank: userData.bank,
-            settings: userData.settings,
-            inventory: invData,
-        }
-        const evaled = await Eval.run(message, { bot: client, config: client.config, user: user, code: code });
+        const evaled = await Eval.run(message, { client: client, config: client.config, user: userData, shop: shopData, code: code });
         message.channel.send({ content: '```JS\n' + evaled + '```'}); // or message.reply('```JS\n' + evaulated + '```');
     },
     slashExecute(client, interaction) {
