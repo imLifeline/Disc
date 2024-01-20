@@ -29,6 +29,24 @@ module.exports = async (client, int) => {
 
         switch (int.customId) {
             case 'Save Song': {
+                const db = client.db;
+                const user = await db.get(`user_${int.user.id}`);
+                const savedSongs = user.savedSongs;
+                if (!savedSongs) {
+                    let songInfo = {
+                        title: track.title,
+                        url: track.url,
+                    }
+                    user.savedSongs = [];
+                    user.savedSongs.push(songInfo);
+                    db.set(`user_${int.user.id}`, user);
+                } else {
+                    savedSongs.find(s => s.url === track.url);
+                    return int.reply({
+                        content: `${client.config.deny} | This song is already saved.`,
+                        ephemeral: true
+                    });
+                }
                 int.member.send({ embeds: [embed.Embed_save(track.title, track.url, track.thumbnail, description)] })
                     .then(() => {
                         return int.reply({ content: `✅ | I sent you the name of the music in a private message.`, ephemeral: true, components: [] });

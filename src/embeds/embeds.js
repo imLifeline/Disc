@@ -66,6 +66,15 @@ module.exports = {
         return Embed_queue;
     },
 
+    Embed_saved: function (description, user) {
+        const Embed_saved = new Discord.EmbedBuilder()
+            .setAuthor({ name: user.username, iconURL: user.avatarURL() })
+            .setColor(color)
+            .setDescription(description)
+            .setTimestamp()
+        return Embed_saved;
+    },
+
     Embed_search: function (music_title, description) {
         const Embed_cantFindSong = new Discord.EmbedBuilder()
             .setColor(color)
