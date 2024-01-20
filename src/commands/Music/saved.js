@@ -29,8 +29,7 @@ module.exports = {
         pages.push(savedSongs.slice(i, i + 10));
     }
 
-    let currentPage = 0;
-
+    let currentPage = 0; // Current page number
     // Create the buttons and action row
     let row = new ActionRowBuilder()
         .addComponents(
