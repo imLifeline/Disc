@@ -39,7 +39,7 @@ npm install
 ### Configure environment
 
 [`.env`](./.env)
-
+```
 TOKEN = ""
 BOT_NAME = ""
 OWNER_ID = ""
@@ -62,6 +62,7 @@ DP_FORCE_YTDL_MOD = "@distube/ytdl-core"
 MONGO_URL = ""
 
 WORK_COOLDOWN = 10000
+```
 
 <details> 
   <summary>Detailed description</summary>
