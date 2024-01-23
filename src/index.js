@@ -124,7 +124,7 @@ const setEnvironment = () => {
             : ENV.URL_QUERY_TYPE;
 
         // Colors
-        client.config.embeColor = typeof (ENV.EMBED_COLOR) === 'undefined'
+        client.config.embedColor = typeof (ENV.EMBED_COLOR) === 'undefined'
             ? client.config.embedColor
             : ENV.EMBED_COLOR;
         //console.log('setEnvironment: ', client.config);
